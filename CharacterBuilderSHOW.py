@@ -1155,22 +1155,27 @@ class Ui_MainWindow(object):
             return godly
         elif self.pwrSettingBox.currentText() == "Custom Power Setting":
             # Create a custom input dialog for Custom Setting
-            hitPTs, ok1 = QInputDialog.getInt(self, "Custom Setting", "Enter Starting Health: ")
-            staPTs, ok2 = QInputDialog.getInt(self, "Custom Setting", "Enter Starting Stamina: ")
-            pwrPTs, ok3 = QInputDialog.getInt(self, "Custom Setting", "Enter Power Points: ")
-            sklPTs, ok4 = QInputDialog.getInt(self, "Custom Setting", "Enter Skill Points: ")
-            heroPTs, ok5 = QInputDialog.getInt(self, "Custom Setting", "Enter Maximum Hero Points: ")
+            while True:
+                hitPTs, ok1 = QInputDialog.getInt(None, "Custom Setting", "Enter Starting Health: ")
+                staPTs, ok2 = QInputDialog.getInt(None, "Custom Setting", "Enter Starting Stamina: ")
+                pwrPTs, ok3 = QInputDialog.getInt(None, "Custom Setting", "Enter Power Points: ")
+                sklPTs, ok4 = QInputDialog.getInt(None, "Custom Setting", "Enter Skill Points: ")
+                heroPTs, ok5 = QInputDialog.getInt(None, "Custom Setting", "Enter Maximum Hero Points: ")
 
-            if ok1 and ok2 and ok3 and ok4 and ok5:
-                # Set the values based on user input
-                self.curHPSPN.setValue(hitPTs)  # Customize as needed
-                self.maxHPSPN.setValue(hitPTs)  # Customize as needed
-                self.curSPSPN.setValue(staPTs)  # Customize as needed
-                self.maxSPSPN.setValue(staPTs)  # Customize as needed
-                self.heroPtsSPN.setMaximum(heroPTs)  # Customize as needed
-                self.show_statstracker(self.pwrPTs, self.sklPTs)
-            else:
-                "Please fill out all fields before continuing."
+                if ok1 and ok2 and ok3 and ok4 and ok5:
+                    # Set the values based on user input
+                    self.curHPSPN.setValue(hitPTs)  # Customize as needed
+                    self.maxHPSPN.setValue(hitPTs)  # Customize as needed
+                    self.curSPSPN.setValue(staPTs)  # Customize as needed
+                    self.maxSPSPN.setValue(staPTs)  # Customize as needed
+                    self.pwrPTs = pwrPTs
+                    self.sklPTs = sklPTs
+                    self.totalSklPTs = self.sklPTs + initialSklPTs
+                    self.heroPtsSPN.setMaximum(heroPTs)  # Customize as needed
+                    self.show_statstracker(self.pwrPTs, self.sklPTs)
+                    break
+                else:
+                    QMessageBox.warning(self,"Please Fille Out","Please fill out all fields before continuing.")
 
     # TODO: It works, needs to center the text and a delete button.
     def duralisting(self):
